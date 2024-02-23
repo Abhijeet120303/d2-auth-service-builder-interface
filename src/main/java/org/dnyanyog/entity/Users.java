@@ -25,6 +25,29 @@ public class Users { // Table
 	@Column
 	private String age;
 
+	@Column
+	private String aesKey;
+
+	public long getUserCode() {
+		return userCode;
+	}
+
+	public Users setUserCode(long userCode) {
+		this.userCode = userCode;
+		return this;
+
+	}
+
+	public String getAesKey() {
+		return aesKey;
+	}
+
+	public Users setAesKey(String aesKey) {
+		this.aesKey = aesKey;
+		return this;
+
+	}
+
 	public static Users getInstance() {
 		return new Users();
 	}
