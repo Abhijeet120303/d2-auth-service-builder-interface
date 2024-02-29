@@ -3,10 +3,10 @@ package org.dnyanyog.dto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginRequest { // DTO => Data Transfer Object
-							// View
-	private String username="Admin";
-	private String password="Admin123";
+public class LoginRequest { 
+	
+	private String username;
+	private String password;
 
 	public String getUsername() {
 		return username;

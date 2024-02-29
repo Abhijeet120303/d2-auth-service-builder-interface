@@ -9,6 +9,8 @@ import org.dnyanyog.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class UserManagementController {
 
@@ -17,7 +19,7 @@ public class UserManagementController {
 
 	@PostMapping(path = "/api/v1/auth/user", consumes = { "application/json", "application/xml" }, produces = {
 			"application/json", "application/xml" })
-	public AddUserResponse addUpdateUser(@RequestBody AddUserRequest userRequest) {
+	public AddUserResponse addUpdateUser(@Valid @RequestBody AddUserRequest userRequest) {
 
 		return userService.addUpdateUser(userRequest).orElse(new AddUserResponse());
 	}
