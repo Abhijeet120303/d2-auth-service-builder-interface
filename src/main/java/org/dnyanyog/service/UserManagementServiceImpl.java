@@ -12,6 +12,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.dnyanyog.common.ResponseCode;
 import org.dnyanyog.dto.AddUserRequest;
 import org.dnyanyog.dto.AddUserResponse;
 import org.dnyanyog.entity.Users;
@@ -41,19 +42,28 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 		aesKey = generateAESKey();
 
-		Users usersTable = Users.getInstance().setUsername(request.getUsername()).setAge(request.getAge())
-				.setEmail(request.getEmail()).setPassword(encryptPassword(request.getPassword(), aesKey))
-				.setUserId(generateRandomUserId()).setAesKey(aesKey);
+		List<Users> receivedData = userRepo.findByEmail(request.getEmail());
 
-		usersTable = userRepo.save(usersTable);
+		if (receivedData.isEmpty()) {
+			Users usersTable = Users.getInstance().setUsername(request.getUsername()).setAge(request.getAge())
+					.setEmail(request.getEmail()).setPassword(encryptPassword(request.getPassword(), aesKey))
+					.setUserId(generateRandomUserId()).setAesKey(aesKey);
 
-		userResponse.setMessage("User added successfully");
-		userResponse.setStatus("Success");
-		userResponse.setUserId(usersTable.getUserId());
-		userResponse.getUserData().setEmail(usersTable.getEmail());
-		userResponse.getUserData().setUsername(usersTable.getUsername());
-		userResponse.getUserData().setPassword(usersTable.getPassword());
-		userResponse.getUserData().setAge(usersTable.getAge());
+			usersTable = userRepo.save(usersTable);
+
+			userResponse.setCode(ResponseCode.USER_ADD_SUCCESSFULLY.getCode());
+			userResponse.setStatus(ResponseCode.USER_ADD_SUCCESSFULLY.getStatus());
+			userResponse.setMessage(ResponseCode.USER_ADD_SUCCESSFULLY.getMessage());
+			userResponse.setUserId(usersTable.getUserId());
+			userResponse.getUserData().setEmail(usersTable.getEmail());
+			userResponse.getUserData().setUsername(usersTable.getUsername());
+			userResponse.getUserData().setPassword(usersTable.getPassword());
+			userResponse.getUserData().setAge(usersTable.getAge());
+		} else {
+			userResponse.setCode(ResponseCode.EMIL_ALREADY_EXIT.getCode());
+			userResponse.setStatus(ResponseCode.EMIL_ALREADY_EXIT.getStatus());
+			userResponse.setMessage(ResponseCode.EMIL_ALREADY_EXIT.getMessage());
+		}
 
 		return Optional.of(userResponse);
 	}
@@ -67,8 +77,9 @@ public class UserManagementServiceImpl implements UserManagementService {
 			String encyptedPassword = user.getPassword();
 			String aesKey = user.getAesKey();
 
-			userResponse.setStatus("Success");
-			userResponse.setMessage("User found");
+			userResponse.setCode(ResponseCode.USER_SUCCESSFULLY_FOUND.getCode());
+			userResponse.setStatus(ResponseCode.USER_SUCCESSFULLY_FOUND.getStatus());
+			userResponse.setMessage(ResponseCode.USER_SUCCESSFULLY_FOUND.getMessage());
 			userResponse.setUserId(user.getUserId());
 			userResponse.getUserData().setEmail(user.getEmail());
 			userResponse.getUserData().setUsername(user.getUsername());
@@ -76,8 +87,9 @@ public class UserManagementServiceImpl implements UserManagementService {
 			userResponse.getUserData().setAge(user.getAge());
 
 		} else {
-			userResponse.setStatus("Fail");
-			userResponse.setMessage("User not found");
+			userResponse.setCode(ResponseCode.USER_NOT_FOUND.getCode());
+			userResponse.setStatus(ResponseCode.USER_NOT_FOUND.getStatus());
+			userResponse.setMessage(ResponseCode.USER_NOT_FOUND.getMessage());
 		}
 		return userResponse;
 	}
@@ -121,11 +133,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 			user = userRepo.save(user);
 
-			userResponse.setStatus("Success");
-			userResponse.setMessage("User Updated");
+			userResponse.setCode(ResponseCode.USER_SUCCESSFULLY_UPDATED.getCode());
+			userResponse.setStatus(ResponseCode.USER_SUCCESSFULLY_UPDATED.getStatus());
+			userResponse.setMessage(ResponseCode.USER_SUCCESSFULLY_UPDATED.getMessage());
 		} else {
-			userResponse.setStatus("Fail");
-			userResponse.setMessage("User Not Found");
+			userResponse.setCode(ResponseCode.USER_NOT_FOUND.getCode());
+			userResponse.setStatus(ResponseCode.USER_NOT_FOUND.getStatus());
+			userResponse.setMessage(ResponseCode.USER_NOT_FOUND.getMessage());
 
 		}
 		return userResponse;

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Table
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Users { // Table
-	@GeneratedValue // Auto generated (DB => sequence), primary key
+public class Users {
+	
+	@GeneratedValue 
 	@Id
 	@Column(name = "userCode", nullable = false, updatable = false, insertable = false)
 	private long userCode;

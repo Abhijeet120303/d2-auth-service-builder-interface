@@ -9,12 +9,23 @@ import org.springframework.stereotype.Component;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddUserResponse {
 
+	private String code;
 	private String status;
 	private String message;
 	private long userId;
 
 	@Autowired
 	public UserData userData;
+	
+	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public UserData getUserData() {
 		return userData;

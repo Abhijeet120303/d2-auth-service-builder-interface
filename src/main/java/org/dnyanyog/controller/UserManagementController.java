@@ -36,12 +36,11 @@ public class UserManagementController {
 	public List<Long> getAllUserIds() {
 		return userService.getAllUserIds();
 	}
-	
-	@PostMapping(path = "/auth/v1/user/update/{userID}")
+
+	@PostMapping(path = "/api/v1/auth/update/{userID}")
 	public AddUserResponse updateUser(@PathVariable Long userID, @RequestBody Users request) {
 		return userService.updateUser(userID, request);
 
 	}
-	
 
 }

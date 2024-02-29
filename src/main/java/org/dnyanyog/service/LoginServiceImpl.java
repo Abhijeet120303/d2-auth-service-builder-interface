@@ -8,6 +8,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.dnyanyog.common.ResponseCode;
 import org.dnyanyog.dto.LoginRequest;
 import org.dnyanyog.dto.LoginResponse;
 import org.dnyanyog.entity.Users;
@@ -27,22 +28,29 @@ public class LoginServiceImpl implements LoginService {
 		List<Users> receivedData = userRepo.findByUsername(loginRequest.getUsername());
 
 		if (receivedData.size() == 1) {
+
 			Users userData = receivedData.get(0);
+
 			String encryptedPassword = userData.getPassword();
+
 			String aesKey = userData.getAesKey();
+
 			String decryptPassword = decryptPassword(encryptedPassword, aesKey);
 			String requestPassword = loginRequest.getPassword();
 
 			if (requestPassword.equalsIgnoreCase(decryptPassword)) {
-				response.setStatus("Success");
-				response.setMessage("Login successful");
+				response.setCode(ResponseCode.LOGIN_SUCCESS.getCode());
+				response.setStatus(ResponseCode.LOGIN_SUCCESS.getStatus());
+				response.setMessage(ResponseCode.LOGIN_SUCCESS.getMessage());
 			} else {
-				response.setStatus("Fail");
-				response.setMessage("Username & Password Do Not Match");
+				response.setCode(ResponseCode.LOGIN_FAIL.getCode());
+				response.setStatus(ResponseCode.LOGIN_FAIL.getStatus());
+				response.setMessage(ResponseCode.LOGIN_FAIL.getMessage());
 			}
 		} else {
-			response.setStatus("Fail");
-			response.setMessage("Request Username is Not present in the database");
+			response.setCode(ResponseCode.USERNAME_NOT_PRESENT_IN_DATABASE.getCode());
+			response.setStatus(ResponseCode.USERNAME_NOT_PRESENT_IN_DATABASE.getStatus());
+			response.setMessage(ResponseCode.USERNAME_NOT_PRESENT_IN_DATABASE.getMessage());
 		}
 
 		return response;
