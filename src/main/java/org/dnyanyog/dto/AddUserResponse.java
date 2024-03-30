@@ -4,59 +4,45 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddUserResponse {
 
-	private String code;
-	private String status;
-	private String message;
-	private long userId;
+  private String status;
+  private String message;
+  private long userId;
 
-	@Autowired
-	public UserData userData;
-	
-	
+  @Autowired public UserData userData;
 
-	public String getCode() {
-		return code;
-	}
+  public UserData getUserData() {
+    return userData;
+  }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public void setUserData(UserData userData) {
+    this.userData = userData;
+  }
 
-	public UserData getUserData() {
-		return userData;
-	}
+  public long getUserId() {
+    return userId;
+  }
 
-	public void setUserData(UserData userData) {
-		this.userData = userData;
-	}
+  public void setUserId(long userId) {
+    this.userId = userId;
+  }
 
-	public long getUserId() {
-		return userId;
-	}
+  public String getStatus() {
+    return status;
+  }
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-	public String getStatus() {
-		return status;
-	}
+  public String getMessage() {
+    return message;
+  }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
+  public void setMessage(String message) {
+    this.message = message;
+  }
 }

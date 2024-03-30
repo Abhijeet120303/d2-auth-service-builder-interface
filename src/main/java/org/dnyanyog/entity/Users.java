@@ -8,103 +8,92 @@ import org.springframework.stereotype.Component;
 @Component
 @Table
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Users {
-	
-	@GeneratedValue 
-	@Id
-	@Column(name = "userCode", nullable = false, updatable = false, insertable = false)
-	private long userCode;
+public class Users { // Table
+  @GeneratedValue // Auto generated (DB => sequence), primary key
+  @Id
+  @Column(name = "userCode", nullable = false, updatable = false, insertable = false)
+  private long userCode;
 
-	@Column(name = "userId", nullable = false, updatable = false)
-	private long userId;
-	@Column(name = "username", nullable = false, length = 50)
-	private String username;
-	@Column
-	private String password;
-	@Column
-	private String email;
-	@Column
-	private String age;
+  @Column(name = "userId", nullable = false, updatable = false)
+  private long userId;
 
-	@Column
-	private String aesKey;
+  @Column(name = "username", nullable = false, length = 50)
+  private String username;
 
-	public long getUserCode() {
-		return userCode;
-	}
+  @Column private String password;
+  @Column private String email;
+  @Column private String age;
 
-	public Users setUserCode(long userCode) {
-		this.userCode = userCode;
-		return this;
+  public long getUserCode() {
+    return userCode;
+  }
 
-	}
+  public Users setUserCode(long userCode) {
+    this.userCode = userCode;
+    return this;
+  }
 
-	public String getAesKey() {
-		return aesKey;
-	}
+  public static Users getInstance() {
+    return new Users();
+  }
 
-	public Users setAesKey(String aesKey) {
-		this.aesKey = aesKey;
-		return this;
+  public String getUsername() {
+    return username;
+  }
 
-	}
+  public Users setUsername(String username) {
+    this.username = username;
+    return this;
+  }
 
-	public static Users getInstance() {
-		return new Users();
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public Users setPassword(String password) {
+    this.password = password;
+    return this;
+  }
 
-	public Users setUsername(String username) {
-		this.username = username;
-		return this;
-	}
+  public String getEmail() {
+    return email;
+  }
 
-	public String getPassword() {
-		return password;
-	}
+  public Users setEmail(String email) {
+    this.email = email;
+    return this;
+  }
 
-	public Users setPassword(String password) {
-		this.password = password;
-		return this;
+  public String getAge() {
+    return age;
+  }
 
-	}
+  public Users setAge(String age) {
+    this.age = age;
+    return this;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  public long getUserId() {
+    return userId;
+  }
 
-	public Users setEmail(String email) {
-		this.email = email;
-		return this;
+  public Users setUserId(long userId) {
+    this.userId = userId;
+    return this;
+  }
 
-	}
-
-	public String getAge() {
-		return age;
-	}
-
-	public Users setAge(String age) {
-		this.age = age;
-		return this;
-
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public Users setUserId(long userId) {
-		this.userId = userId;
-		return this;
-
-	}
-
-	@Override
-	public String toString() {
-		return "Users [userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", age=" + age + "]";
-	}
+  @Override
+  public String toString() {
+    return "Users [userId="
+        + userId
+        + ", username="
+        + username
+        + ", password="
+        + password
+        + ", email="
+        + email
+        + ", age="
+        + age
+        + "]";
+  }
 }
